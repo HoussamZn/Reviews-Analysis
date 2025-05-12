@@ -1,0 +1,2 @@
+docker exec -it review-spark-master-1 /opt/bitnami/spark/bin/spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.3,com.datastax.spark:spark-cassandra-connector_2.12:3.1.0" --py-files /TextCleaner.py /last.py
+pause
