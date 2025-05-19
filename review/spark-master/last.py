@@ -1,21 +1,17 @@
-import time
 import joblib
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import pandas_udf, col, from_json, current_timestamp, when, lit,expr, lit
 from pyspark.sql.types import StringType, StructType, StructField
 import pandas as pd
 from TextCleaner import TextCleaner
-from uuid import uuid4
-import uuid
+
 
 # Initialize Spark with Kafka integration
 spark = SparkSession.builder \
     .appName("ReviewAnalysis") \
     .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.3") \
-    .config("spark.jars", "/opt/bitnami/spark/jars/spark-cassandra-connector_2.12-3.1.0.jar") \
-    .config("spark.cassandra.connection.host", "cassandra") \
+    .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:3.0.1") \
     .config("spark.sql.streaming.unsupportedOperationCheck", "false") \
-    .config("spark.cassandra.output.ignoreNulls", "true") \
     .getOrCreate()
 
 # Load your model with error handling
@@ -82,10 +78,8 @@ result_df = parsed_df.withColumn(
         (col("review_text") != ""),
         predict_udf(col("review_text"))
     ).otherwise(lit(""))
-    ).withColumn(
-    "id", expr("uuid()")  # Spark's built-in UUID generator
     ).select(
-        "id", "asin", "review_text", "prediction", "processing_time"
+        "asin", "review_text", "prediction", "processing_time"
     )
 
 
@@ -97,16 +91,22 @@ debug_query = result_df.writeStream \
     .trigger(processingTime='5 seconds') \
     .start()
 
-# Configure Cassandra writer with error tolerance
+# Configure mongoDB writer with error tolerance
 try:
+    def write_to_mongo(batch_df, batch_id):
+        batch_df.write \
+            .format("mongo") \
+            .mode("append") \
+            .option("uri", "mongodb://mongo:27017/review_analysis.product_reviews") \
+            .save()
+
     query = result_df.writeStream \
-        .format("org.apache.spark.sql.cassandra") \
-        .option("keyspace", "review_analysis") \
-        .option("table", "product_reviews") \
-        .option("checkpointLocation", "/tmp/checkpoint") \
-        .trigger(processingTime='5 seconds') \
+        .foreachBatch(write_to_mongo) \
         .outputMode("append") \
+        .option("checkpointLocation", "/tmp/mongo-checkpoint") \
+        .trigger(processingTime='5 seconds') \
         .start()
+
     
 except Exception as e:
     print(f"Failed to start streaming query: {str(e)}")

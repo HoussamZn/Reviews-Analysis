@@ -24,16 +24,6 @@ services:
     networks:
       - smack-net
 
-  cassandra:
-    image: cassandra:3.11
-    ports:
-      - "9042:9042"
-    networks:
-      - smack-net
-    volumes:
-      - ./init.cql:/init.cql
-
-
   spark-master:
     build:
       context: ./spark-master
@@ -95,7 +85,16 @@ services:
     networks:
       - smack-net
 
-
+  mongo:
+    image: mongo:5.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - smack-net
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      
 networks:
   smack-net:
 
