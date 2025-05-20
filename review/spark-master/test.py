@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import udf, col, from_json, current_timestamp, when, lit
+from pyspark.sql.functions import udf, col, from_json, current_timestamp, when, lit,to_json, struct
 from pyspark.sql.types import StringType, StructType, StructField
 from pyspark.ml import PipelineModel
 import re
@@ -48,8 +48,11 @@ except Exception as e:
 
 # Define schema for incoming Kafka messages
 schema = StructType([
+    StructField("reviewerID", StringType()),
     StructField("asin", StringType()),
-    StructField("reviewText", StringType())
+    StructField("reviewerName", StringType()),
+    StructField("reviewText", StringType()),
+    StructField("unixReviewTime", StringType()),
 ])
 
 # Create streaming DataFrame from Kafka with error handling
@@ -68,14 +71,16 @@ except Exception as e:
 
 parsed_df = kafka_df.select(
     from_json(col("value").cast("string"), schema).alias("data")
-).select(
-    when(col("data.asin").isNull(), lit("")).otherwise(col("data.asin")).alias("asin"),
-    when(col("data.reviewText").isNull(), lit("")).otherwise(col("data.reviewText")).alias("reviewText")
-).withColumn(
-    "processing_time", current_timestamp()
-).filter(
-    (col("asin") != "") & (col("reviewText") != "")
-)
+    ).select(
+        *[
+            when(col(f"data.{field}").isNull(), lit("")).otherwise(col(f"data.{field}")).alias(field)
+            for field in ["reviewerID", "asin", "reviewerName", "reviewText", "unixReviewTime"]
+        ]
+    ).withColumn(
+        "processing_time", current_timestamp()
+    ).filter(
+        (col("asin") != "") & (col("reviewText") != "")
+    )
 
 
 clean_text_udf = udf(clean_text, StringType())
@@ -93,7 +98,7 @@ sentiment_labels = {0: "Negative", 1: "Neutral", 2: "Positive"}
 label_udf = udf(lambda x: sentiment_labels.get(int(x), "Unknown"), StringType())
 
 result_df = prediction_df.withColumn("prediction", label_udf(col("prediction"))) \
-    .select("asin", "reviewText", "prediction", "processing_time")
+    .select("reviewerID","asin", "reviewerName","reviewText", "prediction", "processing_time", "unixReviewTime")
 
 
 # Add a debug stream before Cassandra write
@@ -123,6 +128,22 @@ except Exception as e:
     print(f"Failed to start streaming query: {str(e)}")
     spark.stop()
     exit(1)
+
+
+#send results to kafka 
+kafka_output_df = result_df.selectExpr(
+    "asin", "reviewText", "prediction", "processing_time"
+    ).select(
+        to_json(struct("asin", "reviewText", "prediction", "processing_time")).alias("value")
+    )
+kafka_query = kafka_output_df.writeStream \
+    .format("kafka") \
+    .option("kafka.bootstrap.servers", "kafka:29092") \
+    .option("topic", "processed-reviews") \
+    .option("checkpointLocation", "/tmp/kafka-checkpoint") \
+    .outputMode("append") \
+    .start()
+
 
 try:
     query.awaitTermination()
