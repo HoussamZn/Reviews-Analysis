@@ -1,6 +1,5 @@
-pandas
-sklearn
+pandas<2.0
 matplotlib
-joblib
-imblearn
+seaborn
 pyarrow
+nltk

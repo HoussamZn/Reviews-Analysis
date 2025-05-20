@@ -6,11 +6,13 @@ USER root
 
 # Copy your requirements file
 COPY requirements.txt /opt/bitnami/spark/requirements.txt
-COPY pipeline.pkl /tmp/pipeline.pkl
-COPY last.py /last.py
-COPY TextCleaner.py /TextCleaner.py
+COPY test.py /review/test.py
+COPY train.py /review/train.py
+COPY Data.json /review/Data.json
+
+
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /opt/bitnami/spark/requirements.txt
 
-USER 1001
+USER root

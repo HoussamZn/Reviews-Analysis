@@ -1,1 +1,0 @@
-docker exec -it review-cassandra-1 cqlsh -f /init.cql
