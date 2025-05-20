@@ -5,7 +5,6 @@ from pyspark.sql.types import StringType, StructType, StructField
 import pandas as pd
 from TextCleaner import TextCleaner
 
-
 # Initialize Spark with Kafka integration
 spark = SparkSession.builder \
     .appName("ReviewAnalysis") \
@@ -26,7 +25,7 @@ except Exception as e:
 # Define schema for incoming Kafka messages
 schema = StructType([
     StructField("asin", StringType()),
-    StructField("review_text", StringType())
+    StructField("reviewText", StringType())
 ])
 
 # Create streaming DataFrame from Kafka with error handling
@@ -47,11 +46,11 @@ parsed_df = kafka_df.select(
     from_json(col("value").cast("string"), schema).alias("data")
 ).select(
     when(col("data.asin").isNull(), lit("")).otherwise(col("data.asin")).alias("asin"),
-    when(col("data.review_text").isNull(), lit("")).otherwise(col("data.review_text")).alias("review_text")
+    when(col("data.reviewText").isNull(), lit("")).otherwise(col("data.reviewText")).alias("reviewText")
 ).withColumn(
-    "processing_time", current_timestamp()
+    "processingTime", current_timestamp()
 ).filter(
-    (col("asin") != "") & (col("review_text") != "")
+    (col("asin") != "") & (col("reviewText") != "")
 )
 
 # Define prediction UDF
@@ -75,11 +74,11 @@ def predict_udf(text_series: pd.Series) -> pd.Series:
 result_df = parsed_df.withColumn(
     "prediction", 
     when(
-        (col("review_text") != ""),
-        predict_udf(col("review_text"))
+        (col("reviewText") != ""),
+        predict_udf(col("reviewText"))
     ).otherwise(lit(""))
     ).select(
-        "asin", "review_text", "prediction", "processing_time"
+        "asin", "reviewText", "prediction", "processingTime"
     )
 
 
@@ -88,7 +87,7 @@ debug_query = result_df.writeStream \
     .format("console") \
     .outputMode("append") \
     .option("truncate", "false") \
-    .trigger(processingTime='5 seconds') \
+    .trigger(processingTime='1 seconds') \
     .start()
 
 # Configure mongoDB writer with error tolerance
@@ -104,7 +103,7 @@ try:
         .foreachBatch(write_to_mongo) \
         .outputMode("append") \
         .option("checkpointLocation", "/tmp/mongo-checkpoint") \
-        .trigger(processingTime='5 seconds') \
+        .trigger(processingTime='1 seconds') \
         .start()
 
     
