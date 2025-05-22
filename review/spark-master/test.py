@@ -132,9 +132,9 @@ except Exception as e:
 
 #send results to kafka 
 kafka_output_df = result_df.selectExpr(
-    "asin", "reviewText", "prediction", "processing_time"
+    "reviewerID","asin", "reviewerName","reviewText", "prediction", "processing_time", "unixReviewTime"
     ).select(
-        to_json(struct("asin", "reviewText", "prediction", "processing_time")).alias("value")
+        to_json(struct("reviewerID","asin", "reviewerName","reviewText", "prediction", "processing_time", "unixReviewTime")).alias("value")
     )
 kafka_query = kafka_output_df.writeStream \
     .format("kafka") \

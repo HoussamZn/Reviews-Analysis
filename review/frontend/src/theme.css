@@ -1,0 +1,286 @@
+/* Theme colors and styles for the application */
+:root {
+  /* Primary colors */
+  --color-dark-blue: #1E2761;
+  --color-medium-blue: #408CFF;
+  --color-light-blue: #7EB2FF;
+  --color-bright-blue: #00BFFF;
+  
+  /* Secondary colors */
+  --color-purple: #7B68EE;
+  --color-teal: #40E0D0;
+  --color-red: #FF5757;
+  
+  /* Background colors */
+  --color-dark-navy: #0A1929;
+  --color-light: #F8F9FA;
+  
+  /* Sentiment colors */
+  --color-positive: var(--color-teal);
+  --color-neutral: var(--color-light-blue);
+  --color-negative: var(--color-red);
+  
+  /* Gradients */
+  --gradient-blue-purple: linear-gradient(90deg, var(--color-medium-blue) 0%, var(--color-purple) 100%);
+  --gradient-teal-blue: linear-gradient(90deg, var(--color-teal) 0%, var(--color-bright-blue) 100%);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(10, 25, 41, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(10, 25, 41, 0.1), 0 2px 4px -1px rgba(10, 25, 41, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(10, 25, 41, 0.1), 0 4px 6px -2px rgba(10, 25, 41, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(10, 25, 41, 0.1), 0 10px 10px -5px rgba(10, 25, 41, 0.04);
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+}
+
+/* Dark theme styles */
+.dark-theme {
+  --bg-primary: var(--color-dark-navy);
+  --bg-secondary: var(--color-dark-blue);
+  --text-primary: var(--color-light);
+  --text-secondary: rgba(248, 249, 250, 0.7);
+  
+  /* Update backgrounds */
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Light theme styles */
+.light-theme {
+  --bg-primary: var(--color-light);
+  --bg-secondary: white;
+  --text-primary: var(--color-dark-blue);
+  --text-secondary: #4B5563;
+}
+
+/* Common component styles */
+.card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.gradient-button {
+  background: var(--gradient-blue-purple);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: opacity var(--transition-fast);
+}
+
+.gradient-button:hover {
+  opacity: 0.9;
+}
+
+.data-card {
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  background: white;
+  border-left: 4px solid var(--color-medium-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.dark-theme .data-card {
+  background: var(--color-dark-navy);
+  border-left: 4px solid var(--color-medium-blue);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-lg);
+}
+
+.dark-theme .glass-card {
+  background: rgba(10, 25, 41, 0.8);
+  border: 1px solid rgba(30, 39, 97, 0.3);
+}
+
+/* Dark theme styles for better text visibility */
+.dark-theme .text-gray-700 {
+  color: var(--color-light) !important;
+}
+
+.dark-theme .text-gray-600 {
+  color: rgba(248, 249, 250, 0.9) !important;
+}
+
+.dark-theme .text-gray-500 {
+  color: rgba(248, 249, 250, 0.7) !important;
+}
+
+.dark-theme label.font-medium,
+.dark-theme .text-sm.font-medium {
+  color: var(--color-bright-blue) !important;
+}
+
+/* Fix for form elements in dark mode */
+.dark-theme select,
+.dark-theme input,
+.dark-theme textarea {
+  background-color: var(--color-dark-navy);
+  border-color: var(--color-dark-blue);
+  color: var(--color-light);
+}
+
+/* Dashboard card styles */
+.dashboard-card {
+  border-radius: 0.75rem;
+  background-color: white;
+  box-shadow: var(--shadow-md);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-theme .dashboard-card {
+  background-color: var(--color-dark-navy);
+}
+
+/* Chart background fix for dark mode */
+.dark-theme canvas {
+  background-color: transparent !important;
+}
+
+/* Form element styles for better dark mode visibility */
+.dark-theme input, 
+.dark-theme select, 
+.dark-theme textarea {
+  background-color: var(--color-dark-navy);
+  border-color: #4B5563;
+  color: white;
+}
+
+.dark-theme input::placeholder, 
+.dark-theme select::placeholder, 
+.dark-theme textarea::placeholder {
+  color: #9CA3AF;
+}
+
+/* Button styles specific to theme */
+.dark-theme button.secondary {
+  background-color: #374151;
+  color: white;
+}
+
+.dark-theme button.secondary:hover {
+  background-color: #4B5563;
+}
+
+/* Custom select styles */
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-overflow: ellipsis;
+  outline: none;
+  text-indent: 0.01px;
+  text-overflow: '';
+  margin: 0;
+  background-image: none !important; /* Remove default arrow */
+}
+
+/* Safari-specific fix for select element */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .custom-select {
+    padding-right: 2.5rem; /* Extra padding to ensure text doesn't overlap with custom arrow */
+  }
+}
+
+/* Select focus styles */
+.custom-select:focus {
+  border-color: var(--color-medium-blue);
+  box-shadow: 0 0 0 3px rgba(64, 140, 255, 0.15);
+}
+
+.dark-theme .custom-select:focus {
+  border-color: var(--color-bright-blue);
+  box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.15);
+}
+
+/* Hover effect for select dropdown buttons */
+.custom-select:hover + div .rounded-full {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Styled options for better compatibility */
+.custom-select option {
+  padding: 8px 12px;
+  background-color: white;
+  color: var(--color-dark-blue);
+}
+
+.dark-theme .custom-select option {
+  background-color: var(--color-dark-navy);
+  color: white;
+}
+
+/* Cross-browser select styling */
+select.appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+  text-indent: 0.01px;
+  text-overflow: '';
+}
+
+/* Select element focus styles */
+select:focus {
+  outline: none;
+  border-color: var(--color-medium-blue);
+  box-shadow: 0 0 0 2px rgba(64, 140, 255, 0.2);
+}
+
+/* Custom select container styles */
+.relative select + div {
+  transition: color var(--transition-fast);
+}
+
+/* Select hover states */
+.relative:hover select {
+  border-color: var(--color-medium-blue);
+}
+
+.relative:hover select + div {
+  color: var(--color-medium-blue);
+}
+
+/* Dark theme specific select styles */
+.dark-theme select {
+  background-color: var(--color-dark-navy);
+  border-color: rgba(75, 85, 99, 0.6);
+  color: white;
+}
+
+.dark-theme select:focus {
+  border-color: var(--color-bright-blue);
+  box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.2);
+}
+
+.dark-theme .relative:hover select {
+  border-color: var(--color-bright-blue);
+}
+
+.dark-theme .relative:hover select + div {
+  color: var(--color-bright-blue);
+}

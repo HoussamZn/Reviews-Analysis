@@ -1,0 +1,97 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import './theme.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.chart-container {
+  min-height: 300px;
+}
+
+/* Modern UI Elements */
+.dashboard-card {
+  @apply rounded-xl shadow-lg bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300;
+  border-top: 3px solid var(--color-medium-blue);
+}
+
+.dashboard-card:hover {
+  @apply shadow-xl;
+  transform: translateY(-3px);
+}
+
+.stat-card {
+  @apply p-5 rounded-lg flex flex-col;
+  background: var(--gradient-blue-purple);
+  color: white;
+}
+
+.nav-link {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  color: white; /* Ensure high contrast in both themes */
+}
+
+.nav-link:hover, .nav-link.active {
+  @apply bg-opacity-20;
+  background-color: rgba(64, 140, 255, 0.3); /* Medium blue with transparency */
+  color: var(--color-teal);
+}
+
+/* Dark mode text overrides */
+.dark .text-gray-700 {
+  color: rgba(248, 249, 250, 0.9);
+}
+
+.dark .text-gray-600 {
+  color: rgba(248, 249, 250, 0.8);
+}
+
+.dark .text-gray-500 {
+  color: rgba(248, 249, 250, 0.7);
+}
+
+/* Additional styles for form elements */
+@layer components {
+  /* Form elements styling */
+  .form-label {
+    @apply block text-sm font-medium text-primary-darkBlue dark:text-primary-brightBlue mb-2;
+  }
+  
+  .form-input {
+    @apply block w-full rounded-lg border-gray-300 dark:border-gray-700 
+      bg-white dark:bg-background-darkNavy focus:ring-primary-mediumBlue 
+      focus:border-primary-mediumBlue dark:text-white py-2.5 text-sm;
+  }
+  
+  /* Fix for dark mode text */
+  .dark .text-gray-700 {
+    @apply text-gray-300;
+  }
+  
+  .dark .text-gray-600 {
+    @apply text-gray-300;
+  }
+  
+  .dark .text-gray-500 {
+    @apply text-gray-400;
+  }
+}
+
+/* Ensure form labels and medium-weight text is visible in all themes */
+.text-gray-700 {
+  @apply text-primary-darkBlue dark:text-primary-brightBlue;
+}
+
+/* Fix for filter label visibility */
+label.font-medium {
+  @apply text-primary-darkBlue dark:text-primary-brightBlue;
+}

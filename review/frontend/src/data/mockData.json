@@ -1,0 +1,76 @@
+{
+  "reviews": [
+    {
+      "reviewerID": "A2IBPI20UZIR0U",
+      "asin": "1384719342",
+      "reviewerName": "cassandra tu",
+      "reviewText": "Not much to write about here, but it does exactly what it's supposed to. filters out the pop sounds. now my recordings are much more crisp.",
+      "overall": 5.0,
+      "prediction": "positive",
+      "processingTimeMs": 120,
+      "reviewTime": "2014-02-28",
+      "helpful": [0, 0]
+    },
+    {
+      "reviewerID": "A14VAT5EAX3D9S",
+      "asin": "1384719342",
+      "reviewerName": "Jake",
+      "reviewText": "The product does exactly as it should and is quite affordable. I did not realized it was double screened until it arrived.",
+      "overall": 4.0,
+      "prediction": "positive",
+      "processingTimeMs": 115,
+      "reviewTime": "2013-03-16",
+      "helpful": [13, 14]
+    },
+    {
+      "reviewerID": "A195EZSQDW3E21",
+      "asin": "1384719342",
+      "reviewerName": "Rick Bennette",
+      "reviewText": "The primary job of this device is to block the breath that would otherwise produce a popping sound.",
+      "overall": 3.0,
+      "prediction": "neutral",
+      "processingTimeMs": 180,
+      "reviewTime": "2013-08-28",
+      "helpful": [1, 1]
+    },
+    {
+      "reviewerID": "A2C00NNG1ZQQG2",
+      "asin": "B00004Y2UT",
+      "reviewerName": "RustyBill",
+      "reviewText": "Nice windscreen protects my MXL mic and prevents pops. Only thing is that the gooseneck is only marginally able to hold.",
+      "overall": 2.0,
+      "prediction": "negative",
+      "processingTimeMs": 130,
+      "reviewTime": "2014-02-14",
+      "helpful": [0, 0]
+    },
+    {
+      "reviewerID": "A94QU4C90B1AX",
+      "asin": "B00004Y2UT",
+      "reviewerName": "SEAN MASLANKA",
+      "reviewText": "This is great. It looks and performs like a studio filter. If you're recording vocals this will eliminate the pops.",
+      "overall": 5.0,
+      "prediction": "positive",
+      "processingTimeMs": 140,
+      "reviewTime": "2014-02-21",
+      "helpful": [0, 0]
+    }
+  ],
+  "analytics": {
+    "avgProcessingTime": 137,
+    "sentimentDistribution": {
+      "positive": 70,
+      "neutral": 20,
+      "negative": 10
+    },
+    "ratingDistribution": {
+      "1": 5,
+      "2": 10,
+      "3": 20,
+      "4": 25,
+      "5": 40
+    },
+    "totalReviews": 100,
+    "avgRating": 4.2
+  }
+}

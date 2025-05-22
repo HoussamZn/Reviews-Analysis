@@ -1,0 +1,165 @@
+[
+  {
+    "_id": "682e4e02868ed743faadc2c1",
+    "reviewerID": "A3RNEUUWTA78QR",
+    "asin": "B0002D0CGW",
+    "reviewerName": "Jonathan Cannon",
+    "reviewText": "I'm an Irish-style DADGAD guitarist. These picks cut through the string really nicely, and are great for driving rhythms. I'm starting to lean towards the Tortex .5mm, though -- I think the roughness on the surface of the Dunlops adds a little bit of scratch to the sound that I don't like. Still, great picks.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-21T22:03:03.776Z",
+    "unixReviewTime": "1388448000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c2",
+    "reviewerID": "B2RNEUUWTA78QS",
+    "asin": "B0002D0CGW",
+    "reviewerName": "Sarah Johnson",
+    "reviewText": "These picks are terrible. They wear down too quickly and the grip is uncomfortable.",
+    "prediction": "Negative",
+    "processing_time": "2025-05-20T10:15:30.123Z",
+    "unixReviewTime": "1388458000"
+  },{
+    "_id": "682e4e02868ed743faadc2c2",
+    "reviewerID": "B2RNEUUWTA78QS",
+    "asin": "B0002D0CGW",
+    "reviewerName": "Sarah Johnson",
+    "reviewText": "These picks are terrible. They wear down too quickly and the grip is uncomfortable.",
+    "prediction": "Negative",
+    "processing_time": "2025-05-20T10:15:30.123Z",
+    "unixReviewTime": "1388458000"
+  },{
+    "_id": "682e4e02868ed743faadc2c2",
+    "reviewerID": "B2RNEUUWTA78QS",
+    "asin": "B0002D0CGW",
+    "reviewerName": "Sarah Johnson",
+    "reviewText": "These picks are terrible. They wear down too quickly and the grip is uncomfortable.",
+    "prediction": "Negative",
+    "processing_time": "2025-05-20T10:15:30.123Z",
+    "unixReviewTime": "1388458000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c3",
+    "reviewerID": "C1RNEUUWTA78QT",
+    "asin": "B0003D1CGX",
+    "reviewerName": "Michael Brown",
+    "reviewText": "The product works as expected. Nothing special but gets the job done.",
+    "prediction": "Neutral",
+    "processing_time": "2025-05-19T15:45:22.456Z",
+    "unixReviewTime": "1388468000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c4",
+    "reviewerID": "D4RNEUUWTA78QU",
+    "asin": "B0003D1CGX",
+    "reviewerName": "Emily Davis",
+    "reviewText": "I absolutely love this product! Best purchase I've made all year.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-18T08:30:15.789Z",
+    "unixReviewTime": "1388478000"
+  },  {
+    "_id": "682e4e02868ed743faadc2c4",
+    "reviewerID": "D4RNEUUWTA78QU",
+    "asin": "B0003D1CGX",
+    "reviewerName": "Emily Davis",
+    "reviewText": "I absolutely love this product! Best purchase I've made all year.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-18T08:30:15.789Z",
+    "unixReviewTime": "1388478000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c5",
+    "reviewerID": "E5RNEUUWTA78QV",
+    "asin": "B0004E2CGY",
+    "reviewerName": "Robert Wilson",
+    "reviewText": "Not what I expected at all. The quality is poor and it broke after a week.",
+    "prediction": "Negative",
+    "processing_time": "2025-05-17T12:20:45.321Z",
+    "unixReviewTime": "1388488000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c6",
+    "reviewerID": "F6RNEUUWTA78QW",
+    "asin": "B0004E2CGY",
+    "reviewerName": "Patricia Thomas",
+    "reviewText": "Decent product for the price. Works well enough for what I need.",
+    "prediction": "Neutral",
+    "processing_time": "2025-05-16T19:10:33.654Z",
+    "unixReviewTime": "1388498000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c7",
+    "reviewerID": "G7RNEUUWTA78QX",
+    "asin": "B0005F3CGZ",
+    "reviewerName": "James Miller",
+    "reviewText": "Excellent quality and design. Highly recommend to anyone looking for this type of product.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-15T14:05:12.987Z",
+    "unixReviewTime": "1388508000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c8",
+    "reviewerID": "H8RNEUUWTA78QY",
+    "asin": "B0005F3CGZ",
+    "reviewerName": "Jennifer Anderson",
+    "reviewText": "Waste of money. Doesn't work as advertised and customer service was unhelpful.",
+    "prediction": "Negative",
+    "processing_time": "2025-05-14T09:25:40.210Z",
+    "unixReviewTime": "1388518000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2c9",
+    "reviewerID": "I9RNEUUWTA78QZ",
+    "asin": "B0006G4CHA",
+    "reviewerName": "David Taylor",
+    "reviewText": "It's okay. Not amazing but not terrible either. Serves its purpose.",
+    "prediction": "Neutral",
+    "processing_time": "2025-05-13T17:35:28.543Z",
+    "unixReviewTime": "1388528000"
+  },
+  {
+    "_id": "682e4e02868ed743faadc2ca",
+    "reviewerID": "J0RNEUUWTA78RA",
+    "asin": "B0006G4CHA",
+    "reviewerName": "Lisa Martin",
+    "reviewText": "Great value for money! Works even better than I expected. Will buy again.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-12T11:55:17.876Z",
+    "unixReviewTime": "1388538000"
+  },{
+    "_id": "682e4e02868ed743faadc2ca",
+    "reviewerID": "J0RNEUUWTA78RA",
+    "asin": "B0006G4CHA",
+    "reviewerName": "Lisa Martin",
+    "reviewText": "Great value for money! Works even better than I expected. Will buy again.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-12T11:55:17.876Z",
+    "unixReviewTime": "1388538000"
+  },{
+    "_id": "682e4e02868ed743faadc2ca",
+    "reviewerID": "J0RNEUUWTA78RA",
+    "asin": "B0006G4CHA",
+    "reviewerName": "Lisa Martin",
+    "reviewText": "Great value for money! Works even better than I expected. Will buy again.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-12T11:55:17.876Z",
+    "unixReviewTime": "1388538000"
+  },{
+    "_id": "682e4e02868ed743faadc2ca",
+    "reviewerID": "J0RNEUUWTA78RA",
+    "asin": "B0006G4CHA",
+    "reviewerName": "Lisa Martin",
+    "reviewText": "Great value for money! Works even better than I expected. Will buy again.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-12T11:55:17.876Z",
+    "unixReviewTime": "1388538000"
+  },{
+    "_id": "682e4e02868ed743faadc2ca",
+    "reviewerID": "J0RNEUUWTA78RA",
+    "asin": "B0006G4CHA",
+    "reviewerName": "Lisa Martin",
+    "reviewText": "Great value for money! Works even better than I expected. Will buy again.",
+    "prediction": "Positive",
+    "processing_time": "2025-05-12T11:55:17.876Z",
+    "unixReviewTime": "1388538000"
+  }
+]
