@@ -1,3 +1,3 @@
-db = db.getSiblingDB('review_analysis');
+db = db.getSiblingDB('amazon');
 
-db.createCollection('product_reviews');
+db.createCollection('reviews');

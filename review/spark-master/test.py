@@ -115,7 +115,7 @@ try:
         batch_df.write \
             .format("mongo") \
             .mode("append") \
-            .option("uri", "mongodb://mongo:27017/review_analysis.product_reviews") \
+            .option("uri", "mongodb://mongo:27017/amazon.reviews") \
             .save()
 
     query = result_df.writeStream \

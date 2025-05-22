@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kafka WebSocket Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        #messages {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #fff;
+            border: 1px solid #ccc;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .message {
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kafka WebSocket Stream</h1>
+    <div id="status">Connecting...</div>
+    <div id="messages"></div>
+
+    <script>
+        const statusEl = document.getElementById("status");
+        const messagesEl = document.getElementById("messages");
+
+        const socket = new WebSocket("ws://localhost:8001/ws/kafka");
+
+        socket.onopen = () => {
+            statusEl.innerText = "✅ Connected to WebSocket";
+            statusEl.style.color = "green";
+        };
+
+        socket.onmessage = (event) => {
+            const msg = document.createElement("div");
+            msg.classList.add("message");
+            msg.textContent = event.data;
+            messagesEl.prepend(msg);
+        };
+
+        socket.onclose = () => {
+            statusEl.innerText = "❌ WebSocket disconnected";
+            statusEl.style.color = "red";
+        };
+
+        socket.onerror = (err) => {
+            statusEl.innerText = "⚠️ WebSocket error";
+            statusEl.style.color = "orange";
+            console.error("WebSocket error", err);
+        };
+    </script>
+</body>
+</html>
