@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import LiveReviewCard from '../components/LiveReviewCard';
-import mockData from '../data/mockData.json';
-import { reviewsApi } from '../services/apiService';
-import config from '../config';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Dashboard = () => {
@@ -12,7 +9,7 @@ const Dashboard = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8001/ws/kafka");
+    const socket = new WebSocket("ws://" + window.location.host + "/ws/kafka");
 
     socket.onopen = () => {
       setLoading(false);

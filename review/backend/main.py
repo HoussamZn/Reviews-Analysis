@@ -6,8 +6,6 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from models import Review
 from aiokafka import AIOKafkaConsumer
 import asyncio
-import json
-from bson import ObjectId
 from typing import List
 
 app = FastAPI()
@@ -55,10 +53,10 @@ class ConnectionManager:
                 self.disconnect(connection)
 
     async def consume_kafka(self):
-        print("🔄 Starting Kafka consumer...")
+        print("Starting Kafka consumer...")
         consumer = AIOKafkaConsumer(
             "processed-reviews",
-            bootstrap_servers="localhost:9092",
+            bootstrap_servers="kafka:29092",
             group_id="fastapi-group",
             auto_offset_reset="latest",
             enable_auto_commit=True
@@ -91,7 +89,7 @@ async def get_reviews():
     reviews_cursor = collection.find({})
     reviews = []
     async for item in reviews_cursor:
-        item["_id"] = str(item["_id"])  # convert ObjectId to str
+        item["_id"] = str(item["_id"])
         reviews.append(item)
     return reviews
 
