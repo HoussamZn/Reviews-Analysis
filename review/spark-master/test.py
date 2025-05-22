@@ -59,7 +59,7 @@ schema = StructType([
 try:
     kafka_df = spark.readStream \
         .format("kafka") \
-        .option("kafka.bootstrap.servers", "kafka:29092") \
+        .option("kafka.bootstrap.servers", "kafka:29092,kafka2:29093") \
         .option("subscribe", "product-reviews") \
         .option("failOnDataLoss", "false") \
         .option("startingOffsets", "latest") \
@@ -138,7 +138,7 @@ kafka_output_df = result_df.selectExpr(
     )
 kafka_query = kafka_output_df.writeStream \
     .format("kafka") \
-    .option("kafka.bootstrap.servers", "kafka:29092") \
+    .option("kafka.bootstrap.servers", "kafka:29092,kafka2:29093") \
     .option("topic", "processed-reviews") \
     .option("checkpointLocation", "/tmp/kafka-checkpoint") \
     .outputMode("append") \

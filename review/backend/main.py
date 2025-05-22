@@ -56,7 +56,7 @@ class ConnectionManager:
         print("Starting Kafka consumer...")
         consumer = AIOKafkaConsumer(
             "processed-reviews",
-            bootstrap_servers="kafka:29092",
+            bootstrap_servers="kafka:29092,kafka2:29093",
             group_id="fastapi-group",
             auto_offset_reset="latest",
             enable_auto_commit=True
