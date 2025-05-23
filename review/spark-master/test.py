@@ -12,6 +12,7 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('punkt_tab') 
+nltk.data.path.append("/usr/share/nltk_data")
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
@@ -40,7 +41,8 @@ spark = SparkSession.builder \
  
 # Load your model with error handling
 try:
-    model = PipelineModel.load("/review/models")
+    model = PipelineModel.load("/review/models/model")
+
 except Exception as e:
     print(f"Failed to load model: {str(e)}")
     spark.stop()

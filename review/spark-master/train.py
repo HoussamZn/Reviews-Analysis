@@ -7,8 +7,12 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+from pyspark.ml import PipelineModel
+
 import warnings
 warnings.filterwarnings('ignore')
+nltk.data.path.append("/usr/share/nltk_data")
+
 
 # Import des bibliothèques PySpark
 from pyspark.sql import SparkSession
@@ -30,8 +34,8 @@ def download_nltk_resources():
 def initialize_spark():
     spark = SparkSession.builder \
         .appName("AmazonReviewsSentimentAnalysis") \
-        .config("spark.driver.memory", "4g") \
-        .config("spark.executor.memory", "4g") \
+        .config("spark.driver.memory", "2g") \
+        .config("spark.executor.memory", "2g") \
         .getOrCreate()
     print("Spark version:", spark.version)
     return spark
@@ -107,7 +111,7 @@ def split_data(spark_df, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1):
     train_spark_df, temp_df = spark_df.randomSplit([train_ratio, val_ratio + test_ratio], seed=42)
     val_spark_df, test_spark_df = temp_df.randomSplit([val_ratio / (val_ratio + test_ratio),test_ratio / (val_ratio + test_ratio)], seed=42)
 
-    test_spark_df.write.json("/review/test_data.json")
+    test_spark_df.toPandas().to_json("/review/test_data.json", orient="records", lines=True)
     return train_spark_df, val_spark_df, test_spark_df
 
 def balance_classes(train_spark_df):
@@ -185,8 +189,8 @@ def create_model_pipelines(feature_pipeline):
     rf_pipeline = Pipeline(stages=feature_pipeline + [rf])
 
     return {
-        #"Logistic Regression": lr_pipeline,
-        "Decision Tree": dt_pipeline,
+        "Logistic Regression": lr_pipeline,
+        #"Decision Tree": dt_pipeline,
         #"Random Forest": rf_pipeline
     }
 
@@ -248,7 +252,9 @@ def train_all_models(model_pipelines, balanced_train_df, val_spark_df, test_spar
 
 def save_model(model, path):
     print("\n====== Sauvegarde du meilleur modèle ======")
-    model.save(path)
+    #model.save(path)
+    model.write().overwrite().save(path)
+
     print(f"Meilleur modèle sauvegardé avec succès à {path}!")
 
 def create_prediction_function(spark, model):
@@ -332,7 +338,7 @@ def main():
         model_pipelines = create_model_pipelines(feature_pipeline)
         best_model_name, best_model = train_all_models(model_pipelines, balanced_train_df, val_spark_df, test_spark_df)
         print(f"\n====== {best_model_name} ======")
-        save_model(best_model,"/review/models")
+        save_model(best_model,"/tmp/model")
         predict_sentiment = create_prediction_function(spark, best_model)
         test_examples(predict_sentiment)
 

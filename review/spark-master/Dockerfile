@@ -11,8 +11,10 @@ COPY train.py /review/train.py
 COPY Data.json /review/Data.json
 
 
-
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /opt/bitnami/spark/requirements.txt
+RUN pip install nltk && \
+    python -m nltk.downloader -d /usr/share/nltk_data stopwords punkt wordnet punkt_tab
+ENV NLTK_DATA=/usr/share/nltk_data
 
 USER root

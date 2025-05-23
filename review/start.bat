@@ -1,2 +1,2 @@
-docker exec -it review-spark-master-1 /opt/bitnami/spark/bin/spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.3,com.datastax.spark:spark-cassandra-connector_2.12:3.1.0,org.mongodb.spark:mongo-spark-connector_2.12:3.0.1" /review/test.py
+docker exec -it review-spark-master-1 /opt/bitnami/spark/bin/spark-submit --master spark://spark-master:7077 --packages "org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.3,com.datastax.spark:spark-cassandra-connector_2.12:3.1.0,org.mongodb.spark:mongo-spark-connector_2.12:3.0.1" /review/test.py
 pause
