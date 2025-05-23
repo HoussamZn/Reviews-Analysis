@@ -37,9 +37,6 @@ const StaticAnalytics = () => {
   
   // State for different analytics data
   const [reviewsData, setReviewsData] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState('all');
-  const [productOptions, setProductOptions] = useState([]);
-  
   const [summaryStats, setSummaryStats] = useState({
     totalReviews: 0,
     avgRating: 0,
@@ -85,7 +82,6 @@ const StaticAnalytics = () => {
       tension: 0.3,
     }]
   });
-
   // Fetch static analytics data
   useEffect(() => {
     const fetchAnalyticsData = async () => {
@@ -118,57 +114,6 @@ const StaticAnalytics = () => {
     
     fetchAnalyticsData();
   }, []);
-
-  // Update charts when product filter changes
-  useEffect(() => {
-    if (reviewsData.length > 0) {
-      updateSentimentDistribution();
-    }
-  }, [selectedProduct, reviewsData]);
-
-  // Filter reviews based on selected product
-  const getFilteredReviews = () => {
-    if (selectedProduct === 'all') {
-      return reviewsData;
-    }
-    return reviewsData.filter(review => review.asin === selectedProduct);
-  };
-
-  // Update sentiment distribution based on filtered data
-  const updateSentimentDistribution = () => {
-    const filteredData = getFilteredReviews();
-    
-    if (!filteredData || filteredData.length === 0) {
-      setSentimentDistribution({
-        labels: ['Positive', 'Negative', 'Neutral'],
-        datasets: [{
-          data: [0, 0, 0],
-          backgroundColor: ['#4ade80', '#f87171', '#a3a3a3'],
-        }]
-      });
-      return;
-    }
-
-    const sentimentCounts = {
-      Positive: 0,
-      Negative: 0,
-      Neutral: 0
-    };
-
-    filteredData.forEach(review => {
-      if (review.prediction) {
-        sentimentCounts[review.prediction] = (sentimentCounts[review.prediction] || 0) + 1;
-      }
-    });
-
-    setSentimentDistribution({
-      labels: ['Positive', 'Negative', 'Neutral'],
-      datasets: [{
-        data: [sentimentCounts.Positive, sentimentCounts.Negative, sentimentCounts.Neutral],
-        backgroundColor: ['#4ade80', '#f87171', '#a3a3a3'],
-      }]
-    });
-  };
   
   // Process the raw data into chart data
   const processAnalyticsData = (data) => {
@@ -228,14 +173,7 @@ const StaticAnalytics = () => {
       neutralPercentage
     });
     
-    // Create product options sorted by review count
-    const sortedProducts = [...productMap.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .map(([asin, count]) => ({ asin, count }));
-    
-    setProductOptions(sortedProducts);
-    
-    // Update sentiment distribution chart (initial load - all products)
+    // Update sentiment distribution chart
     setSentimentDistribution({
       labels: ['Positive', 'Negative', 'Neutral'],
       datasets: [{
@@ -293,11 +231,6 @@ const StaticAnalytics = () => {
     });
   };
 
-  // Handle product filter change
-  const handleProductChange = (event) => {
-    setSelectedProduct(event.target.value);
-  };
-
   // Chart options
   const chartOptions = {
     responsive: true,
@@ -346,9 +279,7 @@ const StaticAnalytics = () => {
       },
       title: {
         display: true,
-        text: selectedProduct === 'all' 
-          ? 'Sentiment Distribution (All Products)' 
-          : `Sentiment Distribution (Product: ${selectedProduct})`,
+        text: 'Sentiment Distribution',
         color: theme === 'dark' ? '#e5e7eb' : '#374151',
       },
     },
@@ -374,7 +305,6 @@ const StaticAnalytics = () => {
       </div>
     );
   }
-
   return (
     <div className={`container mx-auto p-4 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center">Review Analytics Dashboard</h1>
@@ -398,35 +328,10 @@ const StaticAnalytics = () => {
           <p className="text-2xl md:text-3xl font-bold text-red-500">{summaryStats.negativePercentage.toFixed(1)}%</p>
         </div>
       </div>
-
-      {/* Charts Row 1 */}
+        {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <div className={`p-4 rounded-lg shadow-md ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-            <h2 className="text-lg md:text-xl font-semibold mb-2 sm:mb-0">Sentiment Distribution</h2>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <label htmlFor="product-select" className="text-sm font-medium whitespace-nowrap">
-                Filter by Product:
-              </label>
-              <select
-                id="product-select"
-                value={selectedProduct}
-                onChange={handleProductChange}
-                className={`px-3 py-1 rounded border text-sm min-w-0 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-600 border-gray-500 text-white' 
-                    : 'bg-white border-gray-300 text-gray-800'
-                }`}
-              >
-                <option value="all">All Products</option>
-                {productOptions.map(({ asin, count }) => (
-                  <option key={asin} value={asin}>
-                    {asin} ({count} reviews)
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <h2 className="text-lg md:text-xl font-semibold mb-4">Sentiment Distribution</h2>
           <div className="h-64 md:h-80">
             <Pie data={sentimentDistribution} options={pieOptions} />
           </div>

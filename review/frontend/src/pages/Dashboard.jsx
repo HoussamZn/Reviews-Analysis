@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const socket = new WebSocket("ws://" + window.location.host + "/ws/kafka");
+    const socket = new WebSocket("ws://" + "localhost:8001" + "/ws/kafka");
 
     socket.onopen = () => {
       setLoading(false);
